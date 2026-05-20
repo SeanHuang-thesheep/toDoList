@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.todolist.demo.mappers.TaskMapper">
+
+    <select id="findByUserId" resultType="Task">
+        SELECT
+            id,
+            user_id AS userId,
+            title,
+            description,
+            completed,
+            due_datetime AS dueDatetime,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM tasks
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+
+    <select id="findById" resultType="Task">
+        SELECT
+            id,
+            user_id AS userId,
+            title,
+            description,
+            completed,
+            due_datetime AS dueDatetime,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM tasks
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertTask" parameterType="Task" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tasks (
+            user_id,
+            title,
+            description,
+            due_datetime
+        )
+        VALUES (
+            #{userId},
+            #{title},
+            #{description},
+            #{dueDatetime}
+        )
+    </insert>
+
+    <update id="updateTask" parameterType="Task">
+        UPDATE tasks
+        SET
+            title = #{title},
+            description = #{description},
+            completed = #{completed},
+            due_datetime = #{dueDatetime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTask">
+        DELETE FROM tasks
+        WHERE id = #{id}
+    </delete>
+
+    <update id="updateStatus">
+        UPDATE tasks
+        SET completed = #{completed}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

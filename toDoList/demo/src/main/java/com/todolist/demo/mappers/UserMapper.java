@@ -1,11 +1,13 @@
 package com.todolist.demo.mappers;
 
+import com.todolist.demo.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
-
-import com.todolist.demo.pojo.Users;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
-    Users findByUsername(String username);
-    void insertUser(Users user);
+
+    User findByUsername(@Param("username") String username);
+
+    int insertUser(User user);
 }

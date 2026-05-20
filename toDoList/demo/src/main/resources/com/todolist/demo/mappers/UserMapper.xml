@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.todolist.demo.mappers.UserMapper">
-    <select id = "findByUsername" resultType="com.todolist.demo.pojo.Users">
-        SELECT * FROM users WHERE username = #{username}
+
+    <select id="findByUsername" resultType="User">
+        SELECT
+            id,
+            username,
+            email,
+            password,
+            created_at AS createdAt
+        FROM users
+        WHERE username = #{username}
     </select>
 
-    <insert id = "insertUser" parameterType="com.todolist.demo.pojo.Users">
-        INSERT INTO users (username, email, password, created_at) VALUES (#{username}, #{email}, #{password}, #{created_at})
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (
+            username,
+            email,
+            password
+        )
+        VALUES (
+            #{username},
+            #{email},
+            #{password}
+        )
     </insert>
+
 </mapper>
